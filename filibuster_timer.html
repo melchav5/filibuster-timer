@@ -1,0 +1,30 @@
+<script>
+  function updateTimer() {
+    const startTime = new Date("March 31, 2025 19:00:00 GMT-0400"); // EDT time
+
+    const now = new Date();
+    const nowUTC = new Date(now.toUTCString().slice(0, -4));
+    const offset = -4 * 60 * 60 * 1000; // Adjust for Eastern Time
+    const nowET = new Date(nowUTC.getTime() + offset);
+
+    const elapsed = nowET - startTime;
+
+    if (elapsed < 0) {
+      document.getElementById("timer").innerText = "Filibuster hasn't started yet.";
+      return;
+    }
+
+    const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((elapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
+
+    document.getElementById("timer").innerText =
+      `${days}d ${hours}h ${minutes}m ${seconds}s (ET)`;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  });
+</script>
